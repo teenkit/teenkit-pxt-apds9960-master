@@ -871,7 +871,7 @@ namespace ZjwlGesture9960 {
             }
 
             /* Keep looping as long as gesture data is valid */
-            while (1) {
+            while (DEBUG) {
                 basic.pause(30);
                 /* Get the contents of the STATUS register. Is data still valid? */
                 gstatus = this.APDS9960ReadReg(APDS9960_GSTATUS);
@@ -880,11 +880,7 @@ namespace ZjwlGesture9960 {
                     /* Read the current FIFO level */
                     fifo_level = this.APDS9960ReadReg(APDS9960_GFLVL);
 
-                    if (DEBUG) {
-                        
-                        serial.writeLine("FIFO Level: "+fifo_level);
-                    }
-                       
+                    serial.writeLine("FIFO Level: "+fifo_level);
                     /* If there's stuff in the FIFO, read it into our data block */
                     if (fifo_level > 0) {
                         bytes_read = this.APDS9960ReadRegBlock(APDS9960_GFIFO_U,
@@ -1077,6 +1073,7 @@ namespace ZjwlGesture9960 {
             A9960.init();
             inited = true;
 
+            /** 
             control.inBackground(() => {
                 while(true) {
                     const gesture = A9960.read();
@@ -1089,6 +1086,7 @@ namespace ZjwlGesture9960 {
                         basic.pause(50);
                     }
                 })
+                */
         }
         
         
