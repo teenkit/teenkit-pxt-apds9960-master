@@ -222,29 +222,7 @@ enum ZjwlGesture {
 //% weight=10 color=#9F79EE icon="\uf108" block="姿势传感器"
 namespace ZjwlGesture9960 {
 
-    const gestureEventId = 3100;
-    let lastGesture = ZjwlGesture.None;
-    /**
-     * Do something when a gesture is detected by Grove - Gesture
-     * @param gesture type of gesture to detect
-     * @param handler code to run
-     */
-    //% blockId=grove_gesture_create_event block="姿势|%gesture"
-    export function onGesture(gesture: ZjwlGesture , handler: Action) {
-        control.onEvent(gestureEventId, gesture, handler);
-        let apds9960 = new APDS9960();
-        apds9960.init();
-        control.inBackground(() => {
-            while(true) {
-                const gesture = apds9960.read();
-                    if (gesture != lastGesture) {
-                        lastGesture = gesture;
-                        control.raiseEvent(gestureEventId, lastGesture);
-                    }
-                    basic.pause(1800);
-                }
-            })
-    }
+    
 
     /* Container for gesture data */
 
@@ -1073,5 +1051,38 @@ namespace ZjwlGesture9960 {
             return this.APDS9960ReadReg(addr);
         
         }
+    }
+
+    const gestureEventId = 3100;
+    let lastGesture = ZjwlGesture.None;
+    let A9960 = new APDS9960();
+    let inited = false;
+    /**
+     * Do something when a gesture is detected by Grove - Gesture
+     * @param gesture type of gesture to detect
+     * @param handler code to run
+     */
+    //% blockId=grove_gesture_create_event block="姿势|%gesture"
+    export function onGesture(gesture: ZjwlGesture , handler: ()=>void) {
+        control.onEvent(gestureEventId, gesture, handler);
+        if(!inited){
+            A9960.init();
+            inited = true;
+
+            control.inBackground(() => {
+                while(true) {
+                    const gesture = A9960.read();
+                    basic.showString("g:" + gesture);
+                        if (gesture != lastGesture) {
+                            lastGesture = gesture;
+                            control.raiseEvent(gestureEventId, lastGesture);
+                            basic.showString("EV");
+                        }
+                        basic.pause(50);
+                    }
+                })
+        }
+        
+        
     }
 }
