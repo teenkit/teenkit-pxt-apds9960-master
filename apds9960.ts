@@ -231,10 +231,11 @@ namespace ZjwlGesture9960 {
      */
     //% blockId=grove_gesture_create_event block="姿势|%gesture"
     export function onGesture(gesture: ZjwlGesture , handler: Action) {
-       // basic.showString("-s");
+        basic.showString("-st");
         control.onEvent(gestureEventId, gesture, handler);
-       // let apds9960 = new APDS9960();
-       // apds9960.init();
+        let apds9960 = new APDS9960();
+        basic.showString("-si");
+        apds9960.init();
         // control.inBackground(() => {
         //     while(true) {
         //         const gesture = apds9960.read();
