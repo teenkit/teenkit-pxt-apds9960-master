@@ -1,5 +1,5 @@
 
-let DEBUG = false;
+let DEBUG = 0;
 /* APDS-9960 I2C address */
 let APDS9960_I2C_ADDR = 0x39
 
@@ -219,7 +219,7 @@ enum ZjwlGesture {
 /**
  * Functions to operate Grove module.
  */
-//% weight=10 color=#9F79EE icon="\uf108" block="姿势传感器"
+//% weight=40 color=#FF6600 icon="\uf108" block="手势传感器"
 namespace ZjwlGesture9960 {
 
     const gestureEventId = 3100;
@@ -231,7 +231,7 @@ namespace ZjwlGesture9960 {
      */
     //% blockId=grove_gesture_create_event block="姿势|%gesture"
     export function onGesture(gesture: ZjwlGesture , handler: Action) {
-       // control.onEvent(gestureEventId, gesture, handler);
+        control.onEvent(gestureEventId, gesture, handler);
        // let apds9960 = new APDS9960();
        // apds9960.init();
         // control.inBackground(() => {
