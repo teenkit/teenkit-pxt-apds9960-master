@@ -1,5 +1,5 @@
 
-let DEBUG = 0;
+let DEBUG = false;
 /* APDS-9960 I2C address */
 let APDS9960_I2C_ADDR = 0x39
 
@@ -299,6 +299,7 @@ namespace ZjwlGesture9960 {
             let i: number = 0;
             let y: number = 0;
             
+            /**
             for (let i = 0; i < len; i=i+4) { 
                 
                 data_buf[i] = this.readi2c(0xFc);
@@ -314,7 +315,7 @@ namespace ZjwlGesture9960 {
                                     +data_buf[i+3].toString() + " ; "  );
                 }    
             }
-
+ */
         
             return len;
         }
@@ -590,7 +591,7 @@ namespace ZjwlGesture9960 {
                 this.setGestureIntEnable(DEFAULT_GIEN);   
             }
 
-            if (0) { 
+            if (DEBUG) { 
                 /* Gesture config register dump */
                 let reg:number=0x00;
                 let val:number=0x00;
@@ -917,7 +918,7 @@ namespace ZjwlGesture9960 {
                             fifo_data[i] = data_buf[i];
                         }
    
-                        if (0) {
+                        if (DEBUG) {
                             
                             serial.writeLine("FIFO Dump: ");
                             for ( i = 0; i < bytes_read; i++ ) {
@@ -938,7 +939,7 @@ namespace ZjwlGesture9960 {
                                 gesture_data.total_gestures++;
                             }
 
-                            if (0) {
+                            if (DEBUG) {
                                 
                                 serial.writeLine("Up Data: ");
                                 for ( i = 0; i < gesture_data.total_gestures; i++ ) {
