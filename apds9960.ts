@@ -234,16 +234,16 @@ namespace ZjwlGesture9960 {
         control.onEvent(gestureEventId, gesture, handler);
         let apds9960 = new APDS9960();
         apds9960.init();
-        control.inBackground(() => {
-            while(true) {
-                const gesture = apds9960.read();
-                    if (gesture != lastGesture) {
-                        lastGesture = gesture;
-                        control.raiseEvent(gestureEventId, lastGesture);
-                    }
-                    basic.pause(1800);
-                }
-            })
+        // control.inBackground(() => {
+        //     while(true) {
+        //         const gesture = apds9960.read();
+        //             if (gesture != lastGesture) {
+        //                 lastGesture = gesture;
+        //                 control.raiseEvent(gestureEventId, lastGesture);
+        //             }
+        //             basic.pause(1800);
+        //         }
+        //     })
     }
 
     /* Container for gesture data */
@@ -999,29 +999,29 @@ namespace ZjwlGesture9960 {
         init() {
             this.pads9960_init();
             this.enableGestureSensor(false);
-            if (0) {
-                /* Gesture config register dump */
-                let reg: number = 0x00;
-                let val: number = 0x00;
+            // if (0) {
+            //     /* Gesture config register dump */
+            //     let reg: number = 0x00;
+            //     let val: number = 0x00;
                 
-                for (reg = 0x80; reg <= 0xAF; reg++) {
-                    if ((reg != 0x82) &&
-                        (reg != 0x8A) &&
-                        (reg != 0x91) &&
-                        (reg != 0xA8) &&
-                        (reg != 0xAC) &&
-                        (reg != 0xAD)) {
-                        val = this.APDS9960ReadReg(reg);
-                        serial.writeLine(reg + ": 0x" + val);
-                    }
-                }
+            //     for (reg = 0x80; reg <= 0xAF; reg++) {
+            //         if ((reg != 0x82) &&
+            //             (reg != 0x8A) &&
+            //             (reg != 0x91) &&
+            //             (reg != 0xA8) &&
+            //             (reg != 0xAC) &&
+            //             (reg != 0xAD)) {
+            //             val = this.APDS9960ReadReg(reg);
+            //             serial.writeLine(reg + ": 0x" + val);
+            //         }
+            //     }
     
-                for (reg = 0xE4; reg <= 0xE7; reg++) {
-                    val = this.APDS9960ReadReg(reg);
-                    serial.writeLine(reg + ": 0x" + val);
-                }
+            //     for (reg = 0xE4; reg <= 0xE7; reg++) {
+            //         val = this.APDS9960ReadReg(reg);
+            //         serial.writeLine(reg + ": 0x" + val);
+            //     }
                 
-            }
+            // }
         }
         
 
