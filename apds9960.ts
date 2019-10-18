@@ -568,8 +568,9 @@ namespace ZjwlGesture9960 {
                 this.setGestureIntEnable(DEFAULT_GIEN);   
             }
 
+            /** 
             if (0) { 
-                /* Gesture config register dump */
+                //Gesture config register dump 
                 let reg:number=0x00;
                 let val:number=0x00;
                 
@@ -592,6 +593,7 @@ namespace ZjwlGesture9960 {
                 }
                 
             }
+            */
            // serial.writeLine("init sensor finish");
         }
 
@@ -895,6 +897,7 @@ namespace ZjwlGesture9960 {
                             fifo_data[i] = data_buf[i];
                         }
    
+                        /** 
                         if (0) {
                             
                             serial.writeLine("FIFO Dump: ");
@@ -904,6 +907,7 @@ namespace ZjwlGesture9960 {
                             serial.writeLine("FIFO END");
             
                         }
+                        */
                                   
                 
                         if (bytes_read >= 4) {
@@ -916,6 +920,7 @@ namespace ZjwlGesture9960 {
                                 gesture_data.total_gestures++;
                             }
 
+                            /** 
                             if (0) {
                                 
                                 serial.writeLine("Up Data: ");
@@ -924,7 +929,7 @@ namespace ZjwlGesture9960 {
                                 }
                                 serial.writeLine("Up END");
                             }
-                           
+                           */
 
                             /* Filter and process gesture data. Decode near/far state */
                             if (this.processGestureData()) {
@@ -977,8 +982,9 @@ namespace ZjwlGesture9960 {
         init() {
             this.pads9960_init();
             this.enableGestureSensor(false);
+            /** 
             if (0) {
-                /* Gesture config register dump */
+                // Gesture config register dump 
                 let reg: number = 0x00;
                 let val: number = 0x00;
                 
@@ -1000,6 +1006,8 @@ namespace ZjwlGesture9960 {
                 }
                 
             }
+            */
+            basic.showString("inited")
         }
         
 
