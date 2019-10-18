@@ -1069,11 +1069,12 @@ namespace ZjwlGesture9960 {
     //% blockId=grove_gesture_create_event block="姿势|%gesture"
     export function onGesture(gesture: ZjwlGesture , handler: ()=>void) {
         control.onEvent(gestureEventId, gesture, handler);
+        /** 
         if(!inited){
             A9960.init();
             inited = true;
 
-            /** 
+            
             control.inBackground(() => {
                 while(true) {
                     const gesture = A9960.read();
