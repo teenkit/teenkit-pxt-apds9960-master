@@ -222,7 +222,29 @@ enum ZjwlGesture {
 //% weight=10 color=#9F79EE icon="\uf108" block="姿势传感器"
 namespace ZjwlGesture9960 {
 
-    
+    const gestureEventId = 3100;
+    let lastGesture = ZjwlGesture.None;
+    /**
+     * Do something when a gesture is detected by Grove - Gesture
+     * @param gesture type of gesture to detect
+     * @param handler code to run
+     */
+    //% blockId=grove_gesture_create_event block="姿势|%gesture"
+    export function onGesture(gesture: ZjwlGesture , handler: ()=> void) {
+        control.onEvent(gestureEventId, gesture, handler);
+        let apds9960 = new APDS9960();
+        apds9960.init();
+        control.inBackground(() => {
+            while(true) {
+                const gesture = apds9960.read();
+                    if (gesture != lastGesture) {
+                        lastGesture = gesture;
+                        control.raiseEvent(gestureEventId, lastGesture);
+                    }
+                    basic.pause(1800);
+                }
+            })
+    }
 
     /* Container for gesture data */
 
@@ -568,9 +590,8 @@ namespace ZjwlGesture9960 {
                 this.setGestureIntEnable(DEFAULT_GIEN);   
             }
 
-            /** 
             if (0) { 
-                //Gesture config register dump 
+                /* Gesture config register dump */
                 let reg:number=0x00;
                 let val:number=0x00;
                 
@@ -593,7 +614,6 @@ namespace ZjwlGesture9960 {
                 }
                 
             }
-            */
            // serial.writeLine("init sensor finish");
         }
 
@@ -871,7 +891,7 @@ namespace ZjwlGesture9960 {
             }
 
             /* Keep looping as long as gesture data is valid */
-            while (DEBUG) {
+            while (1) {
                 basic.pause(30);
                 /* Get the contents of the STATUS register. Is data still valid? */
                 gstatus = this.APDS9960ReadReg(APDS9960_GSTATUS);
@@ -880,7 +900,11 @@ namespace ZjwlGesture9960 {
                     /* Read the current FIFO level */
                     fifo_level = this.APDS9960ReadReg(APDS9960_GFLVL);
 
-                    serial.writeLine("FIFO Level: "+fifo_level);
+                    if (DEBUG) {
+                        
+                        serial.writeLine("FIFO Level: "+fifo_level);
+                    }
+                       
                     /* If there's stuff in the FIFO, read it into our data block */
                     if (fifo_level > 0) {
                         bytes_read = this.APDS9960ReadRegBlock(APDS9960_GFIFO_U,
@@ -893,7 +917,6 @@ namespace ZjwlGesture9960 {
                             fifo_data[i] = data_buf[i];
                         }
    
-                        /** 
                         if (0) {
                             
                             serial.writeLine("FIFO Dump: ");
@@ -903,7 +926,6 @@ namespace ZjwlGesture9960 {
                             serial.writeLine("FIFO END");
             
                         }
-                        */
                                   
                 
                         if (bytes_read >= 4) {
@@ -916,7 +938,6 @@ namespace ZjwlGesture9960 {
                                 gesture_data.total_gestures++;
                             }
 
-                            /** 
                             if (0) {
                                 
                                 serial.writeLine("Up Data: ");
@@ -925,7 +946,7 @@ namespace ZjwlGesture9960 {
                                 }
                                 serial.writeLine("Up END");
                             }
-                           */
+                           
 
                             /* Filter and process gesture data. Decode near/far state */
                             if (this.processGestureData()) {
@@ -978,9 +999,8 @@ namespace ZjwlGesture9960 {
         init() {
             this.pads9960_init();
             this.enableGestureSensor(false);
-            /** 
             if (0) {
-                // Gesture config register dump 
+                /* Gesture config register dump */
                 let reg: number = 0x00;
                 let val: number = 0x00;
                 
@@ -1002,8 +1022,6 @@ namespace ZjwlGesture9960 {
                 }
                 
             }
-            */
-            basic.showString("inited")
         }
         
 
@@ -1055,41 +1073,5 @@ namespace ZjwlGesture9960 {
             return this.APDS9960ReadReg(addr);
         
         }
-    }
-
-    const gestureEventId = 3100;
-    let lastGesture = ZjwlGesture.None;
-    let A9960 = new APDS9960();
-    let inited = false;
-    /**
-     * Do something when a gesture is detected by Grove - Gesture
-     * @param gesture type of gesture to detect
-     * @param handler code to run
-     */
-    //% blockId=grove_gesture_create_event block="姿势|%gesture"
-    export function onGesture(gesture: ZjwlGesture , handler: ()=>void) {
-        control.onEvent(gestureEventId, gesture, handler);
-        /** 
-        if(!inited){
-            A9960.init();
-            inited = true;
-
-            
-            control.inBackground(() => {
-                while(true) {
-                    const gesture = A9960.read();
-                    basic.showString("g:" + gesture);
-                        if (gesture != lastGesture) {
-                            lastGesture = gesture;
-                            control.raiseEvent(gestureEventId, lastGesture);
-                            basic.showString("EV");
-                        }
-                        basic.pause(50);
-                    }
-                })
-               
-        }
-         */
-        
     }
 }
