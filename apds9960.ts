@@ -1087,9 +1087,9 @@ namespace ZjwlGesture9960 {
                         basic.pause(50);
                     }
                 })
-                */
+               
         }
-        
+         */
         
     }
 }
