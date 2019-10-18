@@ -233,7 +233,7 @@ namespace ZjwlGesture9960 {
     export function onGesture(gesture: ZjwlGesture , handler: ()=> void) {
         control.onEvent(gestureEventId, gesture, handler);
         let apds9960 = new APDS9960();
-        apds9960.init();
+       // apds9960.init();
         // control.inBackground(() => {
         //     while(true) {
         //         const gesture = apds9960.read();
