@@ -1,5 +1,6 @@
 
 let DEBUG = 0;
+let INITED: boolean = false;
 /* APDS-9960 I2C address */
 let APDS9960_I2C_ADDR = 0x39
 
@@ -224,28 +225,38 @@ namespace ZjwlGesture9960 {
 
     const gestureEventId = 3100;
     let lastGesture = ZjwlGesture.None;
+    const A9960 = new APDS9960();
     /**
      * Do something when a gesture is detected by Grove - Gesture
      * @param gesture type of gesture to detect
      * @param handler code to run
      */
     //% blockId=grove_gesture_create_event block="手势|%gesture"
-    export function onGesture(gesture: ZjwlGesture , handler: Action) {
+    export function onGesture(gesture: ZjwlGesture , handler: ()=>void) {
         basic.showString("-st");
         control.onEvent(gestureEventId, gesture, handler);
-        let apds9960 = new APDS9960();
+       
         basic.showString("-si");
-        apds9960.init();
-        // control.inBackground(() => {
-        //     while(true) {
-        //         const gesture = apds9960.read();
-        //             if (gesture != lastGesture) {
-        //                 lastGesture = gesture;
-        //                 control.raiseEvent(gestureEventId, lastGesture);
-        //             }
-        //             basic.pause(50);
-        //         }
-        //     })
+
+        if(!INITED){
+            A9960.init();
+            basic.showString("-fi");
+            control.inBackground(() => {
+                while(true) {
+                    const gesture = A9960.read();
+                    basic.showString("G-" + gesture);
+                    if (gesture != lastGesture) {
+                        lastGesture = gesture;
+                        control.raiseEvent(gestureEventId, lastGesture);
+                        basic.showString("NG");
+                    }
+                    basic.pause(50);
+                    }
+                })
+        }
+        
+
+        
     }
 
     /* Container for gesture data */
@@ -993,6 +1004,7 @@ namespace ZjwlGesture9960 {
             motion = gesture_motion;
             return motion;
         }
+        
 
         /**
          * Create a new driver of Grove - Gesture
@@ -1002,6 +1014,8 @@ namespace ZjwlGesture9960 {
         init() {
             this.pads9960_init();
             this.enableGestureSensor(false);
+            INITED = true;
+
             // if (0) {
             //     /* Gesture config register dump */
             //     let reg: number = 0x00;
