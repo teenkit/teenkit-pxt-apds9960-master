@@ -223,44 +223,7 @@ enum ZjwlGesture {
 //% weight=40 color=#FF6600 icon="\uf108" block="手势传感器"
 namespace ZjwlGesture9960 {
 
-    const gestureEventId = 3100;
-    let lastGesture = ZjwlGesture.None;
     
-    let INITED = false;
-    /**
-     * Do something when a gesture is detected by Grove - Gesture
-     * @param gesture type of gesture to detect
-     * @param handler code to run
-     */
-    //% blockId=grove_gesture_create_event block="手势::|%gesture"
-    export function onGesture(gesture: ZjwlGesture , handler: ()=>void) {
-        basic.showString("-st");
-        control.onEvent(gestureEventId, gesture, handler);
-       
-        basic.showString("-si");
-
-        if(!INITED){
-            const A9960 = new APDS9960();
-            A9960.init();
-            INITED = true;
-            basic.showString("-fi");
-            control.inBackground(() => {
-                while(true) {
-                    const gesture = A9960.read();
-                    basic.showString("G-" + gesture);
-                    if (gesture != lastGesture) {
-                        lastGesture = gesture;
-                        control.raiseEvent(gestureEventId, lastGesture);
-                        basic.showString("NG");
-                    }
-                    basic.pause(50);
-                    }
-                })
-        }
-        
-
-        
-    }
 
     /* Container for gesture data */
 
@@ -1093,5 +1056,44 @@ namespace ZjwlGesture9960 {
             return this.APDS9960ReadReg(addr);
         
         }
+    }
+
+    const gestureEventId = 3100;
+    let lastGesture = ZjwlGesture.None;
+    const A9960 = new APDS9960();
+    let INITED = false;
+    /**
+     * Do something when a gesture is detected by Grove - Gesture
+     * @param gesture type of gesture to detect
+     * @param handler code to run
+     */
+    //% blockId=grove_gesture_create_event block="手势-:|%gesture"
+    export function onGesture(gesture: ZjwlGesture , handler: ()=>void) {
+        basic.showString("-st");
+        control.onEvent(gestureEventId, gesture, handler);
+       
+        basic.showString("-si");
+
+        if(!INITED){
+            
+            A9960.init();
+            INITED = true;
+            basic.showString("-fi");
+            control.inBackground(() => {
+                while(true) {
+                    const gesture = A9960.read();
+                    basic.showString("G-" + gesture);
+                    if (gesture != lastGesture) {
+                        lastGesture = gesture;
+                        control.raiseEvent(gestureEventId, lastGesture);
+                        basic.showString("NG");
+                    }
+                    basic.pause(50);
+                    }
+                })
+        }
+        
+
+        
     }
 }
