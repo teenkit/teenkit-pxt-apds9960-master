@@ -225,7 +225,7 @@ namespace ZjwlGesture9960 {
 
     const gestureEventId = 3100;
     let lastGesture = ZjwlGesture.None;
-    const A9960 = new APDS9960();
+    
     let INITED = false;
     /**
      * Do something when a gesture is detected by Grove - Gesture
@@ -240,6 +240,7 @@ namespace ZjwlGesture9960 {
         basic.showString("-si");
 
         if(!INITED){
+            const A9960 = new APDS9960();
             A9960.init();
             INITED = true;
             basic.showString("-fi");
