@@ -1,5 +1,5 @@
 {
-    "name": "pxt-zjwl-apds9960",
+    "name": "teenkit-apds9960",
     "version": "0.0.0",
     "description": "gesture recognition,apds9960",
     "dependencies": {
