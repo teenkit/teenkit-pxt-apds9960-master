@@ -219,7 +219,7 @@ enum ZjwlGesture {
 /**
  * Functions to operate Grove module.
  */
-//% weight=10 color=#9F79EE icon="\uf108" block="姿势传感器"
+//% weight=10 color=#9F79EE icon="\uf108" block="手势传感器"
 namespace ZjwlGesture9960 {
 
     const gestureEventId = 3100;
@@ -233,15 +233,15 @@ namespace ZjwlGesture9960 {
     export function onGesture(gesture: ZjwlGesture , handler: Action) {
         basic.showString("-1");
         control.onEvent(gestureEventId, gesture, handler);
-basic.showString("-2");
+        basic.showString("-2");
         let apds9960 = new APDS9960();
-basic.showString("-3");
+        basic.showString("-3");
         apds9960.init();
-basic.showString("-4");
+        basic.showString("-4");
         control.inBackground(() => {
             while(true) {
                 const gesture = apds9960.read();
-basic.showNumber(gesture);
+                basic.showNumber(gesture);
                     if (gesture != lastGesture) {
                         lastGesture = gesture;
                         control.raiseEvent(gestureEventId, lastGesture);
@@ -311,13 +311,7 @@ basic.showNumber(gesture);
                 data_buf[i+2] = this.readi2c(0xFe);
                 data_buf[i + 3] = this.readi2c(0xFf);
                 basic.pause(10);
-                if (DEBUG) {
-                    
-                    serial.writeLine(data_buf[i].toString() + " ; "
-                                    +data_buf[i+1].toString() + " ; "
-                                    +data_buf[i+2].toString() + " ; "
-                                    +data_buf[i+3].toString() + " ; "  );
-                }    
+                 
             }
 
         
@@ -595,8 +589,8 @@ basic.showNumber(gesture);
                 this.APDS9960WriteReg(APDS9960_GCONF3, DEFAULT_GCONF3);//00
                 this.setGestureIntEnable(DEFAULT_GIEN);   
             }
-           let avi = isGestureAvailable();
-basic.showNumber(avi);
+           let avi = this.isGestureAvailable();
+            basic.showNumber(avi);
         }
 
         /**
@@ -943,36 +937,28 @@ basic.showNumber(avi);
             let data = 0, result = 0;
 
             switch (this.readGesture()) {
-
                 
                 case DIR.DIR_UP:
-                    //serial.writeLine("gseture: " + "UP");
                     result = ZjwlGesture.Up;
                     break;
                 case DIR.DIR_DOWN:
-                   // serial.writeLine("gseture: " + "DPWN");
                     result = ZjwlGesture.Down;
                     break;
                 case DIR.DIR_LEFT:
-                    //serial.writeLine("gseture: " + "LEFT");
                     result = ZjwlGesture.Left;
                     break;
                 case DIR.DIR_RIGHT:
-                   // serial.writeLine("gseture: " + "RIGHT");
                     result = ZjwlGesture.Right;
                     break;
                 case DIR.DIR_NEAR:
-                   // serial.writeLine("gseture: " + "NEAR");
                     result = ZjwlGesture.Forward;
                     break;
                 case DIR.DIR_FAR:
-                   // serial.writeLine("gseture: " + "FAR");
                     result = ZjwlGesture.Backward;
                     break;
                 default:
 
             }
-           // serial.writeLine("start gseture: ");
             return result;
         }
 
