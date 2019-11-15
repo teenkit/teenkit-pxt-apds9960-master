@@ -51,7 +51,8 @@ namespace apds9960 {
     //% blockId="init" block="init"
     //% weight=90 blockGap=8
 export function init():boolean{
-    let id=getReg(REG_ID)
+    let id=getReg(REG_ID);
+basic.showNumber(id);
     if(id!=APDS9960_ID) return false;
     setReg(0x80, 0b01000101); //POWER ON<0>, GESTURE ENABLE<6>, PROXIMITY DETECT ENALBE<2>,AEN=0
     setReg(0x90, 0b00110000); //Gesture LED Drive Strength 300%(max)
