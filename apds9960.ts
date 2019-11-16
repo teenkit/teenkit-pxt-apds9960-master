@@ -994,10 +994,10 @@ namespace ZjwlGesture9960 {
         /**
          * Create a new driver of Grove - Gesture
          */
-        //% blockId=grove_gesture_init block="%strip|initiate the Grove - Gesture"
+        //% blockId=grove_gesture_init block="%strip|initiate the Grove - Gesture2"
         //% advanced=true
         init() {
-            this.pads9960_init();
+          //  this.pads9960_init();
           //  this.enableGestureSensor(false);
             if (0) {
                 /* Gesture config register dump */
