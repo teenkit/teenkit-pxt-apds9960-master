@@ -1,6 +1,6 @@
 {
     "name": "teenkit-apds9960",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "gesture recognition,apds9960",
     "dependencies": {
         "core": "*",
@@ -14,6 +14,6 @@
     "testFiles": [
         "test.ts"
     ],
-    "public": false,
+    "public": true,
     "license": "MIT"
 }
