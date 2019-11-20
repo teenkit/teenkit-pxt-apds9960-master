@@ -8,8 +8,7 @@
     },
     "files": [
         "README.md",
-        "apds9960.ts",
-        "teenkit.png"
+        "apds9960.ts"
     ],
     "testFiles": [
         "test.ts"
