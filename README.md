@@ -1,5 +1,5 @@
 # TEENKIT-pxt--apds9960
-# 重庆润颐科技
+# 重庆金阶石
 gesture recognition,apds9960
 【阶石少儿编程】彩虹物联感知开发板（micro:bit版）板载手势传感器驱动（for makecode）
 
