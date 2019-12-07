@@ -1,7 +1,12 @@
 # TEENKIT-pxt--apds9960
 # 重庆金阶石
-gesture recognition,apds9960
+
 【阶石少儿编程】彩虹物联感知开发板（micro:bit版）板载手势传感器驱动（for makecode）
+author: 金阶石
+
+![](https://github.com/teenkit/teenkit-pxt-apds9960-master/blob/master/icon.png)  
+  
+![](https://github.com/teenkit/teenkit-pxt-apds9960-master/blob/master/icon.png)
 
 ## TODO
 
